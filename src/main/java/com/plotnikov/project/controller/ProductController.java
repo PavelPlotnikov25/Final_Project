@@ -18,14 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
-    private ProductServiceImpl service;
+    private final ProductServiceImpl service;
 
     @Autowired
     public ProductController(ProductServiceImpl service) {
@@ -55,8 +54,8 @@ public class ProductController {
     public ModelAndView getFormArticle(ModelAndView modelAndView) {
         final Product product = new Product();
         product.setPrice(500);
-        List<ProductType> productTypeValues = new ArrayList<ProductType>(List.of(ProductType.values()));
-        List<ProductTechnology> productTechnologies = new ArrayList<ProductTechnology>(List.of(ProductTechnology.values()));
+        List<ProductType> productTypeValues = new ArrayList<>(List.of(ProductType.values()));
+        List<ProductTechnology> productTechnologies = new ArrayList<>(List.of(ProductTechnology.values()));
         productTechnologies.remove(ProductTechnology.ALL);
         productTypeValues.remove(ProductType.All);
         modelAndView.addObject("product", product);
@@ -144,8 +143,6 @@ public class ProductController {
         Page<Product> page = service.getAll(pageable);
         List<Integer> pageSizes = List.of(5, 10, 15);
         int customPageSize = 0;
-        final List<Product> products = StreamSupport.stream(service.getAll(pageable).spliterator(), false)
-                .collect(Collectors.toList());
         modelAndView.addObject("customPageSize", customPageSize);
         modelAndView.addObject("page", page);
         modelAndView.addObject("pageSizes", pageSizes);
