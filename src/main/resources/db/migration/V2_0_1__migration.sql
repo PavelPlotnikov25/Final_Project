@@ -89,6 +89,12 @@ CREATE TABLE public.product_invoice (
 );
 
 
+INSERT INTO public.basket VALUES ('3ffe0209-9469-4518-9aaf-8dbe2801553e');
+INSERT INTO public.basket VALUES ('affe7e64-46af-401e-9aaf-706295e93baf');
+
+
+INSERT INTO public.customer VALUES ('61be60cd-3de2-4522-8cfc-d0e733e7d20c', 'u', 'u', false, 'u', '$2a$10$kfLLpgkwFFEImRcqrBQqPOhFexU/f8UfEIhK2kgCjSYM2Qz4uJ55C', 'USER', '3ffe0209-9469-4518-9aaf-8dbe2801553e');
+INSERT INTO public.customer VALUES ('0663a91c-a3f1-467c-b9bb-3812b11e3eb0', 'a', 'a', false, 'a', '$2a$10$WF4k/Sxh/xzGPe8iqgSmSu2CX5RHC8tOME9C6aAushM0Nou0nIZbW', 'ADMIN', 'affe7e64-46af-401e-9aaf-706295e93baf');
 --
 -- TOC entry 3345 (class 0 OID 48427)
 -- Dependencies: 210
