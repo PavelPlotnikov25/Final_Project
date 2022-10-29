@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Products demo</title>
+</head>
+<body>
+<div id="menu" th:insert="menu :: menu_fragment"></div>
+<div class="card" style="width: 30%;
+margin: 0 auto;
+border-color: green">
+
+    <img th:src="${productInfo.getImgUrl()}" class="card-img-top" alt="..." id="cardImg" style="height: 300px; width: 300px; margin: 0 auto">
+    <div class="card-body">
+        <h5 class="card-title" th:text="|name: ${productInfo.getName()}|"></h5>
+        <h6 class="card-subtitle mb-2 text-muted" th:text="|price ${productInfo.getPrice()}|"></h6>
+        <p class="card-text" th:text="|Product description ${productInfo.getDescription()}|"></p>
+        <p class="card-text" th:text="|Product type ${productInfo.getProductType()}|"></p>
+        <p class="card-text" th:text="|Product technology ${productInfo.getProductTechnology()}|"></p>
+        <a class="nav-link"  th:href="@{'/products/update/' + ${productInfo.getId()}}">Edit</a>
+        <form th:if="${session.userRole == 'USER'}" th:action="@{/basket/addProduct}" th:method="POST">
+            <label>
+                <input type="hidden" th:value="${productInfo.id}" id="productId" name="productId" />
+            </label>
+            <div>
+                <button type="submit" class="btn btn-danger" style="width: 100%; background-color: #38303e">AddBasket</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Basket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<div id="menu" th:insert="menu :: menu_fragment"></div>
+    <h1 style="margin-left: 45%;">Basket</h1>
+
+
+    <div th:if="${message}">
+        <p th:text="${message}" style="font-size: 40px; color: green"></p>
+    </div>
+    <div th:if="${error}">
+        <p th:text="${error}" style="font-size: 40px; color: red"></p>
+    </div>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Count</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="productEntry : ${productsMap}">
+            <td th:text="${productEntry.getKey().getName()}"></td>
+            <td th:text="${productEntry.getValue()}"></td>
+            <td>
+                <form th:action="@{'/basket/delete/' + ${productEntry.getKey().getId()}}" th:method="DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+<div style="margin-left: 45%; margin-top: 20px;">
+    <form th:action="@{/products}" style="display: inline">
+        <button type="submit" class="btn btn-danger">Back To Products</button>
+    </form>
+    <form th:action="@{/invoice/create}" th:method="POST" style="display: inline">
+        <button type="submit" class="btn btn-danger">BUY</button>
+    </form>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>User invoices</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<div id="menu" th:insert="menu :: menu_fragment"></div>
+<h2>Invoices</h2>
+
+<table>
+    <tr>
+        <th th:if="${session.userRole == 'ADMIN'}">User Email</th>
+        <th th:if="${session.userRole == 'ADMIN'}">Invoice ID</th>
+        <th>Sum</th>
+        <th>Products</th>
+    </tr>
+    <tr th:each="invoice : ${userInvoices}">
+        <td th:if="${session.userRole == 'ADMIN'}" th:text="${user.email}"></td>
+        <td th:if="${session.userRole == 'ADMIN'}" th:text="${invoice.getId()}"></td>
+        <td th:text="${invoice.getSum() + '$'}"></td>
+        <td th:colspan="${invoice.getProductsInInvoice().size()}" th:each="product:${invoice.getProductsInInvoice()}">
+            <p th:text="${product.name}"></p>
+        </td>
+    </tr>
+
+</table>
+<form th:if="${session.userRole == 'ADMIN'}" th:action="@{/users}" style="display: inline">
+    <button type="submit" class="btn btn-danger">Back to users</button>
+</form>
+<form th:if="${session.userRole == 'USER'}" th:action="@{/products}" style="display: inline">
+    <button type="submit" class="btn btn-danger">Back to products</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+</html>

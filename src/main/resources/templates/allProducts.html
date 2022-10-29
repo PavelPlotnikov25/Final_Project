@@ -1,0 +1,117 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <title>Products</title>
+</head>
+
+<body>
+
+<div id="menu" th:insert="menu :: menu_fragment"></div>
+
+<form th:action="@{/products/filter}" method="get">
+  <input type="hidden" name="page" th:value="${page.getNumber()}">
+  By product type
+  <select name="productType">
+    <option th:each="productType : ${session.productTypes}" th:value="${productType}" th:text="${productType}">
+    </option>
+  </select>
+  By product technology
+  <select  name="productTechnology">
+    <option th:each="productTechnology : ${session.productTechnologies}" th:value="${productTechnology}" th:text="${productTechnology}">
+    </option>
+  </select>
+  <input type="submit" value="filter" style="
+  background-color: dodgerblue; min-height: 40px; border-radius: 20px;">
+</form>
+
+<nav aria-label="...">
+  <ul class="pagination">
+
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disFabled="true">Previous</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" th:if="${page.hasPrevious()}" th:href="@{'/products?page=' + ${page.previousOrFirstPageable.getPageNumber()}}" th:text="${page.previousOrFirstPageable().getPageNumber()+ 1}"/>
+    </li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" th:href="@{'/products?page=' + ${page.getNumber()}}" th:value="${page.getNumber()}"
+         th:text="${page.getNumber() +1 }"/>
+    </li>
+    <li class="page-item"><a class="page-link" th:if="${page.hasNext()}"
+                             th:href="@{'/products?page=' + ${page.nextOrLastPageable().getPageNumber()}}"
+                             th:text="${page.nextOrLastPageable().getPageNumber()+1}"/></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
+
+
+<div class="row mx-auto mt-2">
+  <div class="col-sm-2" th:each="product : ${page.getContent()}">
+
+    <div class="card" th:if="${session.userRole == 'ADMIN'}" style="height: 40px; width: 100%">
+      <a class="nav-link"   th:href="@{'/products/update/' + ${product.id}}"> <button class="btn btn-warning" style="width: 100%; background-color: dodgerblue">Edit but </button></a>
+        <form   th:if="${session.userRole == 'ADMIN'}" th:action="@{/products/delete}" style="width: 100%" th:method="DELETE" >
+              <input type="hidden" th:value="${product.id}" id="id" name="id" />
+                <button type="submit" class="btn btn-danger" style="width: 100%">Delete</button>
+        </form>
+      </div>
+
+
+
+
+
+    <style>
+      #cardImg{
+        height: 250px;
+      }
+    </style>
+
+    <form  th:action="@{'/products/' + ${product.id}}">
+      <label>
+        <input type="hidden" th:value="${product.id}"/>
+      </label>
+      <div class="row my-2">
+
+        <div class="col text-center">
+          <button type="submit" class="btn btn-light">  <img th:src="${product.imgUrl}" class="card-img-top" alt="..." id="cardImg"></button>
+        </div>
+      </div>
+
+
+    </form>
+
+    <div class="card-body" style="height: 250px">
+        <h5 class="card-title" th:text="|name: ${product.name}|"></h5>
+        <h6 class="card-subtitle mb-2 text-muted" th:text="|price ${product.price}|"></h6>
+        <p class="card-text" th:text="|Product description ${product.description}|"></p>
+        <p class="card-text" th:text="|Product type ${product.productType}|"></p>
+        <p class="card-text" th:text="|Product technology ${product.productTechnology}|"></p>
+      </div>
+      <form th:if="${session.userRole == 'USER'}" th:action="@{/basket/addProduct}" th:method="POST">
+        <label>
+          <input type="hidden" th:value="${product.id}" id="productId" name="productId" />
+        </label>
+        <div>
+            <button type="submit" class="btn btn-danger" style="width: 100%; background-color: #38303e">AddBasket</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+<p th:text="${#authentication.getAuthorities()}"></p>
+
+<p th:text="${authorities == null}"></p>
+
+</body>
+</html>

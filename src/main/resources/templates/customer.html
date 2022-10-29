@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Profile information</h2>
+<table>
+    <tr>
+        <th>Email</th>
+        <td th:text="${foundCustomer.email}"></td>
+
+    </tr>
+    <tr>
+        <th>First Name</th>
+        <td th:text="${foundCustomer.firstName}"></td>
+
+    </tr>
+    <tr>
+        <th>Last name</th>
+        <td th:text="${foundCustomer.lastName}"></td>
+
+    </tr>
+
+</table>
+</body>
+</html>
