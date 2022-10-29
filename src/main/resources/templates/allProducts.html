@@ -87,11 +87,8 @@
     </form>
 
     <div class="card-body" style="height: 250px">
-        <h5 class="card-title" th:text="|name: ${product.name}|"></h5>
-        <h6 class="card-subtitle mb-2 text-muted" th:text="|price ${product.price}|"></h6>
-        <p class="card-text" th:text="|Product description ${product.description}|"></p>
-        <p class="card-text" th:text="|Product type ${product.productType}|"></p>
-        <p class="card-text" th:text="|Product technology ${product.productTechnology}|"></p>
+        <h3 class="card-title" th:text="|name: ${product.name}|"></h3>
+        <h5 class="card-subtitle mb-2 text-muted" th:text="|price ${product.price} + '$'|"></h5>
       </div>
       <form th:if="${session.userRole == 'USER'}" th:action="@{/basket/addProduct}" th:method="POST">
         <label>
