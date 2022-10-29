@@ -20,7 +20,6 @@ border-color: green">
         <p class="card-text" th:text="|Product description ${productInfo.getDescription()}|"></p>
         <p class="card-text" th:text="|Product type ${productInfo.getProductType()}|"></p>
         <p class="card-text" th:text="|Product technology ${productInfo.getProductTechnology()}|"></p>
-        <a class="nav-link"  th:href="@{'/products/update/' + ${productInfo.getId()}}">Edit</a>
         <form th:if="${session.userRole == 'USER'}" th:action="@{/basket/addProduct}" th:method="POST">
             <label>
                 <input type="hidden" th:value="${productInfo.id}" id="productId" name="productId" />
