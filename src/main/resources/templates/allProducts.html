@@ -52,7 +52,7 @@
 
 
 <div class="row mx-auto mt-2">
-  <div class="col-sm-2" th:each="product : ${page.getContent()}">
+  <div class="col-sm-2" style="background-color: dodgerblue" th:each="product : ${page.getContent()}">
 
     <div class="card" th:if="${session.userRole == 'ADMIN'}" style="height: 40px; width: 100%">
       <a class="nav-link"   th:href="@{'/products/update/' + ${product.id}}"> <button class="btn btn-warning" style="width: 100%; background-color: dodgerblue">Edit but </button></a>
